@@ -1,54 +1,20 @@
 package day01
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
 	"strings"
+
+	"mrnateriver.io/advent_of_code_2024/shared"
 )
 
 func readInput() <-chan [2]string {
-	ch := make(chan [2]string)
+	return shared.ReadInput("day01/input", func(line string) ([2]string, error) {
+		cols := strings.Split(line, "   ")
 
-	go func(ch chan [2]string) {
-		file, err := os.Open("day01/input")
-		if err != nil {
-			panic(fmt.Errorf("error opening file: %v", err))
-		}
-		defer file.Close()
-
-		fileStats, err := file.Stat()
-		log.Println("Read file: ", fileStats.Size(), "bytes")
-
-		log.Println("Reading file...")
-
-		lineCount := 0
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() {
-			line := scanner.Text()
-			cols := strings.Split(line, "   ")
-
-			if len(cols) != 2 {
-				panic(fmt.Errorf("invalid line: %s", line))
-			}
-
-			ch <- [2]string{cols[0], cols[1]}
-
-			lineCount++
-
-			if lineCount%100 == 0 {
-				log.Println("Read ", lineCount, " lines")
-			}
-		}
-		close(ch)
-
-		if err := scanner.Err(); err != nil {
-			panic(fmt.Errorf("error reading file: %v", err))
+		if len(cols) != 2 {
+			return [2]string{}, (fmt.Errorf("invalid number of columns: %v", len(cols)))
 		}
 
-		log.Println("Read ", lineCount, " lines")
-	}(ch)
-
-	return ch
+		return [2]string{cols[0], cols[1]}, nil
+	})
 }
