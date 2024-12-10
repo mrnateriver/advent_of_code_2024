@@ -25,4 +25,5 @@ go.work.sum
 .env
 
 input
+input_test
 advent_of_code_2024
