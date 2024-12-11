@@ -20,7 +20,7 @@ func ReadInput[T any](file string, processLine LineProcessor[T]) <-chan T {
 		defer file.Close()
 
 		fileStats, err := file.Stat()
-		log.Println("Read file: ", fileStats.Size(), "bytes")
+		log.Println("Opened file:", fileStats.Size(), "bytes")
 
 		log.Println("Reading file...")
 
