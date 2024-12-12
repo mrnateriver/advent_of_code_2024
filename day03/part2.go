@@ -9,9 +9,7 @@ import (
 )
 
 func AddUpMultiplicationInstructionsWithConditions() int {
-	input := shared.ReadInput("day03/input", func(arg string) (string, error) {
-		return arg, nil
-	})
+	input := shared.ReadInputLines("day03/input")
 
 	rg, err := regexp.Compile("mul\\((\\d+),(\\d+)\\)|do\\(\\)|don't\\(\\)")
 	if err != nil {

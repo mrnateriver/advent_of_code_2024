@@ -9,6 +9,12 @@ import (
 
 type LineProcessor[T any] func(string) (T, error)
 
+func ReadInputLines(file string) <-chan string {
+	return ReadInput(file, func(line string) (string, error) {
+		return line, nil
+	})
+}
+
 func ReadInput[T any](file string, processLine LineProcessor[T]) <-chan T {
 	ch := make(chan T)
 
