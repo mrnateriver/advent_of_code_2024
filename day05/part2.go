@@ -1,23 +1,23 @@
 package day05
 
-func SumMiddlePagesOfReorderedUpdates() int {
+func SumMiddlePagesOfReorderedUpdates() (sum int) {
 	seenPages := [100]seenIndex{}
+
+	rules, updates := parseUpdates()
+
 	i := 1
-
-	return parseUpdates(func(upd update, rules [][]precedenceRule) int {
+	for upd := range updates {
 		i++
-
 		if reordered := reorderInvalidUpdate(upd, rules, seenPages[:], &i); reordered != nil {
-			return getMiddlePage(reordered)
+			sum += getMiddlePage(reordered)
 		}
+	}
 
-		return 0
-	})
+	return
 }
 
 func reorderInvalidUpdate(upd update, rules [][]precedenceRule, seenPages []seenIndex, i *int) (reordered update) {
-	// TODO: create a list of page numbers which is sorted according to the rules; then somehow move the numbers from an update according to positions of elements in that array -- perhaps filter the sorted array for update numbers and compact it down to the same length as the update
-
+	// TODO: create a sorting map and sort updates according to it using Topological Sorting & Kahn's Algorithm
 	// But since there are no performance requirements for the task, and the input is quite small, we can get away with O(n^2) complexity
 
 repeat:

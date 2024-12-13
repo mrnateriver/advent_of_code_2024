@@ -2,32 +2,51 @@ package day05
 
 import (
 	"fmt"
+	"iter"
 	"strconv"
 	"strings"
 
 	"mrnateriver.io/advent_of_code_2024/shared"
 )
 
-func parseUpdates(parser func(upd update, rules [][]precedenceRule) int) (sum int) {
+func parseUpdates() ([][]precedenceRule, iter.Seq[update]) {
 	input := readInput()
 
 	// Page numbers are 0 < num < 100, so we can use a super-duper-fast stack-allocated array instead of a hashmap
-	beforeRules := [100][]precedenceRule{}
+	rules := [100][]precedenceRule{}
 
-	for entry := range input {
+	for {
+		entry, ok := <-input
+		if !ok || entry == nil {
+			break
+		}
+
 		switch val := entry.(type) {
 		case precedenceRule:
-			if beforeRules[val.page] == nil {
-				beforeRules[val.page] = make([]precedenceRule, 0, 1)
+			if rules[val.page] == nil {
+				rules[val.page] = make([]precedenceRule, 0, 1)
 			}
-			beforeRules[val.page] = append(beforeRules[val.page], val)
-
-		case update:
-			sum += parser(val, beforeRules[:])
+			rules[val.page] = append(rules[val.page], val)
 		}
 	}
 
-	return sum
+	iterator := func(yield func(update) bool) {
+		for {
+			entry, ok := <-input
+			if !ok || entry == nil {
+				return
+			}
+
+			switch val := entry.(type) {
+			case update:
+				if !yield(val) {
+					return
+				}
+			}
+		}
+	}
+
+	return rules[:], iterator
 }
 
 func readInput() <-chan any {
@@ -82,6 +101,23 @@ type precedenceRule struct {
 }
 
 type update []int
+
+func isUpdateValid(upd update, rules [][]precedenceRule, seenPages []int, i int) bool {
+	for _, v := range upd {
+		pageRules := rules[v]
+		if pageRules != nil {
+			for _, rule := range pageRules {
+				if seenPages[rule.beforePage] == i { // We're comparing to i because we don't want to reset seenPages after every search
+					return false
+				}
+			}
+
+		}
+		seenPages[v] = i
+	}
+
+	return true
+}
 
 func getMiddlePage(upd update) int {
 	mid := len(upd) / 2
