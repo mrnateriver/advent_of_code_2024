@@ -10,15 +10,9 @@ import (
 type LineProcessor[T any] func(string) (T, error)
 
 func ReadInputLines(file string) <-chan string {
-	return ReadInput(file, func(line string) (string, error) {
-		return line, nil
-	})
-}
+	ch := make(chan string)
 
-func ReadInput[T any](file string, processLine LineProcessor[T]) <-chan T {
-	ch := make(chan T)
-
-	go func(ch chan T) {
+	go func(ch chan string) {
 		file, err := os.Open(file)
 		if err != nil {
 			panic(fmt.Errorf("error opening file: %v", err))
@@ -35,12 +29,7 @@ func ReadInput[T any](file string, processLine LineProcessor[T]) <-chan T {
 		for scanner.Scan() {
 			line := scanner.Text()
 
-			res, err := processLine(line)
-			if err != nil {
-				panic(fmt.Errorf("invalid line: %s; %w", line, err))
-			}
-
-			ch <- res
+			ch <- line
 
 			lineCount++
 			if lineCount%100 == 0 {
@@ -54,6 +43,23 @@ func ReadInput[T any](file string, processLine LineProcessor[T]) <-chan T {
 		}
 
 		log.Println("Read ", lineCount, " lines")
+	}(ch)
+
+	return ch
+}
+
+func ReadInput[T any](file string, processLine LineProcessor[T]) <-chan T {
+	ch := make(chan T)
+
+	go func(ch chan T) {
+		for line := range ReadInputLines(file) {
+			res, err := processLine(line)
+			if err != nil {
+				panic(fmt.Errorf("invalid line: %s; %w", line, err))
+			}
+
+			ch <- res
+		}
 	}(ch)
 
 	return ch
