@@ -1,7 +1,7 @@
 package main
 
 import (
-	"mrnateriver.io/advent_of_code_2024/day06"
+	"mrnateriver.io/advent_of_code_2024/day07"
 )
 
 func main() {
@@ -32,6 +32,9 @@ func main() {
 
 	// day06p1 := day06.CountDistinctGuardPositions()
 	// println("Day 06 part 1: ", day06p1)
-	day06p2 := day06.CountPossibleObstructions()
-	println("Day 06 part 2: ", day06p2)
+	// day06p2 := day06.CountPossibleObstructions()
+	// println("Day 06 part 2: ", day06p2)
+
+	day07p1 := day07.SumPossibleEquationsResults()
+	println("Day 07 part 1: ", day07p1)
 }
