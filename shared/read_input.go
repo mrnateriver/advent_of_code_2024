@@ -17,7 +17,12 @@ func ReadInputLines(file string) <-chan string {
 		if err != nil {
 			panic(fmt.Errorf("error opening file: %v", err))
 		}
-		defer file.Close()
+		defer func() {
+			err := file.Close()
+			if err != nil {
+				panic(fmt.Errorf("error closing file: %v", err))
+			}
+		}()
 
 		fileStats, err := file.Stat()
 		log.Println("Opened file:", fileStats.Size(), "bytes")

@@ -3,7 +3,7 @@ package day06
 func CountDistinctGuardPositions() int {
 	guard, grid := readGrid()
 
-	return countDistinctSteps(grid, guard, DIR_UP)
+	return countDistinctSteps(grid, guard, DirUp)
 }
 
 func countDistinctSteps(grid [][]byte, from pos, d dir) int {

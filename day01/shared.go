@@ -12,7 +12,7 @@ func readInput() <-chan [2]string {
 		cols := strings.Split(line, "   ")
 
 		if len(cols) != 2 {
-			return [2]string{}, (fmt.Errorf("invalid number of columns: %v", len(cols)))
+			return [2]string{}, fmt.Errorf("invalid number of columns: %v", len(cols))
 		}
 
 		return [2]string{cols[0], cols[1]}, nil

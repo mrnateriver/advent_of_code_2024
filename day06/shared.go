@@ -83,14 +83,14 @@ func traverse(grid [][]byte, p pos, d dir) iter.Seq2[pos, dir] {
 }
 
 func rotateDirClockwise(d dir) dir {
-	if d == DIR_UP {
-		return DIR_RIGHT
-	} else if d == DIR_RIGHT {
-		return DIR_DOWN
-	} else if d == DIR_DOWN {
-		return DIR_LEFT
-	} else if d == DIR_LEFT {
-		return DIR_UP
+	if d == DirUp {
+		return DirRight
+	} else if d == DirRight {
+		return DirDown
+	} else if d == DirDown {
+		return DirLeft
+	} else if d == DirLeft {
+		return DirUp
 	}
 
 	return dir{}
@@ -129,8 +129,8 @@ type nav struct {
 }
 
 var (
-	DIR_UP    = dir{0, -1}
-	DIR_RIGHT = dir{1, 0}
-	DIR_DOWN  = dir{0, 1}
-	DIR_LEFT  = dir{-1, 0}
+	DirUp    = dir{0, -1}
+	DirRight = dir{1, 0}
+	DirDown  = dir{0, 1}
+	DirLeft  = dir{-1, 0}
 )

@@ -16,7 +16,7 @@ func readInput() <-chan []int {
 		for i, col := range cols {
 			val, err := strconv.Atoi(col)
 			if err != nil {
-				return []int{}, (fmt.Errorf("invalid column: %v; %w", col, err))
+				return []int{}, fmt.Errorf("invalid column: %v; %w", col, err)
 			}
 			res[i] = val
 		}
