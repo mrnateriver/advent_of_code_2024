@@ -1,6 +1,8 @@
 package main
 
-import "mrnateriver.io/advent_of_code_2024/day05"
+import (
+	"mrnateriver.io/advent_of_code_2024/day06"
+)
 
 func main() {
 	// day01p1 := day01.CalculateTotalDistance()
@@ -25,6 +27,11 @@ func main() {
 
 	// day05p1 := day05.SumMiddlePagesOfCorrectlyOrderedUpdates()
 	// println("Day 05 part 1: ", day05p1)
-	day05p2 := day05.SumMiddlePagesOfReorderedUpdates()
-	println("Day 05 part 2: ", day05p2)
+	// day05p2 := day05.SumMiddlePagesOfReorderedUpdates()
+	// println("Day 05 part 2: ", day05p2)
+
+	// day06p1 := day06.CountDistinctGuardPositions()
+	// println("Day 06 part 1: ", day06p1)
+	day06p2 := day06.CountPossibleObstructions()
+	println("Day 06 part 2: ", day06p2)
 }
