@@ -35,6 +35,8 @@ func main() {
 	// day06p2 := day06.CountPossibleObstructions()
 	// println("Day 06 part 2: ", day06p2)
 
-	day07p1 := day07.SumPossibleEquationsResults()
-	println("Day 07 part 1: ", day07p1)
+	// day07p1 := day07.SumPossibleEquationsResults()
+	// println("Day 07 part 1: ", day07p1)
+	day07p2 := day07.SumPossibleEquationsResultsWithConcatenation()
+	println("Day 07 part 2: ", day07p2)
 }
