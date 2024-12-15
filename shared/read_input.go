@@ -60,6 +60,7 @@ func ReadInput[T any](file string, processLine LineProcessor[T]) <-chan T {
 
 			ch <- res
 		}
+		close(ch)
 	}(ch)
 
 	return ch
