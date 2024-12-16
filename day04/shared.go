@@ -6,7 +6,7 @@ import (
 	"mrnateriver.io/advent_of_code_2024/shared"
 )
 
-func countPatterns(bufferLinesAhead int, counter func(lines *[]string, y int) int) int {
+func countPatterns(bufferLinesAhead int, counter func(lines []string, y int) int) int {
 	input := shared.ReadInputLines("day04/input")
 
 	lineLength := 0
@@ -29,12 +29,12 @@ func countPatterns(bufferLinesAhead int, counter func(lines *[]string, y int) in
 			continue
 		}
 
-		foundWords += counter(&lines, cursor)
+		foundWords += counter(lines, cursor)
 		cursor++
 	}
 
 	for ; cursor < processed; cursor++ {
-		foundWords += counter(&lines, cursor)
+		foundWords += counter(lines, cursor)
 	}
 
 	return foundWords

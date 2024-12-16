@@ -102,24 +102,22 @@ func seen(pos pos, d dir, dp map[nav]struct{}) bool {
 }
 
 func moveInDir(p pos, d dir) pos {
-	return pos{p.x + d.x, p.y + d.y}
+	return pos{p.X + d.X, p.Y + d.Y}
 }
 
 func outOfBounds(p pos, lx, ly int) bool {
-	return p.x < 0 || p.x >= lx || p.y < 0 || p.y >= ly
+	return p.X < 0 || p.X >= lx || p.Y < 0 || p.Y >= ly
 }
 
 func gridAt(grid [][]byte, p pos) byte {
-	return grid[p.y][p.x]
+	return grid[p.Y][p.X]
 }
 
 func setGridAt(grid [][]byte, p pos, value byte) {
-	grid[p.y][p.x] = value
+	grid[p.Y][p.X] = value
 }
 
-type dir struct {
-	x, y int
-}
+type dir = shared.Point2d
 
 type pos = dir
 
