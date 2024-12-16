@@ -1,8 +1,6 @@
 package main
 
-import (
-	"mrnateriver.io/advent_of_code_2024/day07"
-)
+import "mrnateriver.io/advent_of_code_2024/day08"
 
 func main() {
 	// day01p1 := day01.CalculateTotalDistance()
@@ -37,6 +35,9 @@ func main() {
 
 	// day07p1 := day07.SumPossibleEquationsResults()
 	// println("Day 07 part 1: ", day07p1)
-	day07p2 := day07.SumPossibleEquationsResultsWithConcatenation()
-	println("Day 07 part 2: ", day07p2)
+	//day07p2 := day07.SumPossibleEquationsResultsWithConcatenation()
+	//println("Day 07 part 2: ", day07p2)
+
+	day08p1 := day08.CountAntinodes()
+	println("Day 08 part 1: ", day08p1)
 }
