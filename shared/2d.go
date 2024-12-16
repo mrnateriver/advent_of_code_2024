@@ -15,7 +15,7 @@ func PointAlongLineAfterB(a, b Point2d, distance float64) Point2d {
 	abLength := DistanceBetweenPoints(a, b)
 	abUnitX, abUnitY := float64(ab.X)/abLength, float64(ab.Y)/abLength
 
-	return Point2d{b.X + int(abUnitX*distance), b.Y + int(abUnitY*distance)}
+	return Point2d{b.X + int(math.Round(abUnitX*distance)), b.Y + int(math.Round(abUnitY*distance))}
 }
 
 func PointWithinBounds(p Point2d, lx, ly int) bool {

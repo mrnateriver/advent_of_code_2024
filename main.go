@@ -38,6 +38,8 @@ func main() {
 	//day07p2 := day07.SumPossibleEquationsResultsWithConcatenation()
 	//println("Day 07 part 2: ", day07p2)
 
-	day08p1 := day08.CountAntinodes()
-	println("Day 08 part 1: ", day08p1)
+	//day08p1 := day08.CountAntinodes()
+	//println("Day 08 part 1: ", day08p1)
+	day08p2 := day08.CountMultiAntinodes()
+	println("Day 08 part 2: ", day08p2)
 }

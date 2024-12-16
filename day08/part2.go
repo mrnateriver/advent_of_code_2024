@@ -1,11 +1,12 @@
 package day08
 
 import (
+	"fmt"
 	"mrnateriver.io/advent_of_code_2024/shared"
 	"time"
 )
 
-func CountAntinodes() int {
+func CountMultiAntinodes() int {
 	freqs, grid := readInput()
 
 	lenY := len(grid)
@@ -25,25 +26,28 @@ func CountAntinodes() int {
 				b := positions[j]
 				dist := shared.DistanceBetweenPoints(a, b)
 
+				antinodes[a] = struct{}{}
+				antinodes[b] = struct{}{}
+
 				grid[a.Y][a.X] = shared.Colored(shared.ColorGreen, "1")
 				grid[b.Y][b.X] = shared.Colored(shared.ColorYellow, "2")
 
 				antinodeA := shared.PointAlongLineAfterB(b, a, dist)
-				if shared.PointWithinBounds(antinodeA, lenX, lenY) {
+				for m := 2; shared.PointWithinBounds(antinodeA, lenX, lenY); m++ {
 					grid[antinodeA.Y][antinodeA.X] = shared.Colored(shared.ColorRed, "X")
-					shared.PrintGrid(grid)
-					time.Sleep(100 * time.Millisecond)
+					outputIteration(grid, antinodeA)
 
 					antinodes[antinodeA] = struct{}{}
+					antinodeA = shared.PointAlongLineAfterB(b, a, dist*float64(m))
 				}
 
 				antinodeB := shared.PointAlongLineAfterB(a, b, dist)
-				if shared.PointWithinBounds(antinodeB, lenX, lenY) {
+				for m := 2; shared.PointWithinBounds(antinodeB, lenX, lenY); m++ {
 					grid[antinodeB.Y][antinodeB.X] = shared.Colored(shared.ColorRed, "X")
-					shared.PrintGrid(grid)
-					time.Sleep(100 * time.Millisecond)
+					outputIteration(grid, antinodeB)
 
 					antinodes[antinodeB] = struct{}{}
+					antinodeB = shared.PointAlongLineAfterB(a, b, dist*float64(m))
 				}
 
 				grid[a.Y][a.X] = string(freq)
@@ -58,4 +62,17 @@ func CountAntinodes() int {
 	}
 
 	return count
+}
+
+func outputIteration(grid [][]string, node pos) {
+	shared.PrintGrid(grid)
+	outputNode(node)
+	time.Sleep(100 * time.Millisecond)
+}
+
+func outputNode(node pos) {
+	fmt.Printf("                                            \n") // clear the line
+	shared.MoveCursorUp(1)
+	fmt.Printf("node: %v\n", node)
+	shared.MoveCursorUp(1)
 }

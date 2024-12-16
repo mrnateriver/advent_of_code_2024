@@ -27,8 +27,8 @@ func PrintGrid[T any](grid [][]T) {
 	defer printLock.Unlock()
 
 	if printDone {
-		setCursorColumn(1)
-		moveCursorUp(len(grid))
+		SetCursorColumn(1)
+		MoveCursorUp(len(grid))
 	}
 
 	for _, row := range grid {
@@ -52,13 +52,13 @@ func AwaitInput() {
 		panic(fmt.Errorf("failed to read input: %w", err))
 	}
 
-	moveCursorUp(1)
+	MoveCursorUp(1)
 }
 
-func moveCursorUp(c int) {
+func MoveCursorUp(c int) {
 	fmt.Printf("\033[%dA", c)
 }
 
-func setCursorColumn(c int) {
+func SetCursorColumn(c int) {
 	fmt.Printf("\033[%dG", c)
 }
