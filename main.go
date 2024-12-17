@@ -1,6 +1,6 @@
 package main
 
-import "mrnateriver.io/advent_of_code_2024/day08"
+import "mrnateriver.io/advent_of_code_2024/day09"
 
 func main() {
 	// day01p1 := day01.CalculateTotalDistance()
@@ -40,6 +40,11 @@ func main() {
 
 	//day08p1 := day08.CountAntinodes()
 	//println("Day 08 part 1: ", day08p1)
-	day08p2 := day08.CountMultiAntinodes()
-	println("Day 08 part 2: ", day08p2)
+	//day08p2 := day08.CountMultiAntinodes()
+	//println("Day 08 part 2: ", day08p2)
+
+	//day09p1 := day09.CalcChecksumAfterDefragmentation()
+	//println("Day 09 part 1: ", day09p1)
+	day09p2 := day09.CalcChecksumAfterIntegralDefragmentation()
+	println("Day 09 part 2: ", day09p2)
 }
