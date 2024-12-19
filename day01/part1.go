@@ -9,7 +9,7 @@ import (
 )
 
 func CalculateTotalDistance() int {
-	var left, right *shared.Tree
+	var left, right *shared.BST[int]
 
 	leftChan := make(chan string)
 	rightChan := make(chan string)
@@ -36,8 +36,8 @@ func CalculateTotalDistance() int {
 
 	log.Println("Calculating distance...")
 
-	leftWalker := left.Walker()
-	rightWalker := right.Walker()
+	leftWalker := left.WalkerDfs()
+	rightWalker := right.WalkerDfs()
 
 	lineCount := 0
 	totalDistance := 0
@@ -67,7 +67,7 @@ func CalculateTotalDistance() int {
 	return totalDistance
 }
 
-func fillTree(t **shared.Tree, ch chan string) {
+func fillTree(t **shared.BST[int], ch chan string) {
 	for {
 		v, ok := <-ch
 		if !ok {

@@ -1,12 +1,14 @@
 package shared
 
-type Tree struct {
-	Left  *Tree
-	Value int
-	Right *Tree
+import "cmp"
+
+type BST[T cmp.Ordered] struct {
+	Left  *BST[T]
+	Value T
+	Right *BST[T]
 }
 
-func (t *Tree) walk(ch chan int) {
+func (t *BST[T]) walk(ch chan T) {
 	if t == nil {
 		return
 	}
@@ -16,8 +18,8 @@ func (t *Tree) walk(ch chan int) {
 	t.Right.walk(ch)
 }
 
-func (t *Tree) Walker() <-chan int {
-	ch := make(chan int)
+func (t *BST[T]) WalkerDfs() <-chan T {
+	ch := make(chan T)
 
 	go func() {
 		t.walk(ch)
@@ -27,9 +29,9 @@ func (t *Tree) Walker() <-chan int {
 	return ch
 }
 
-func (t *Tree) Insert(v int) *Tree {
+func (t *BST[T]) Insert(v T) *BST[T] {
 	if t == nil {
-		return &Tree{nil, v, nil}
+		return &BST[T]{nil, v, nil}
 	}
 
 	if v < t.Value {
@@ -41,7 +43,7 @@ func (t *Tree) Insert(v int) *Tree {
 	return t
 }
 
-func (t *Tree) Size() int {
+func (t *BST[T]) Size() int {
 	if t == nil {
 		return 0
 	}
