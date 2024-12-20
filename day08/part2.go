@@ -33,7 +33,7 @@ func CountMultiAntinodes() int {
 				grid[b.Y][b.X] = shared.Colored(shared.ColorYellow, "2")
 
 				antinodeA := shared.PointAlongLineAfterB(b, a, dist)
-				for m := 2; shared.PointWithinBounds(antinodeA, lenX, lenY); m++ {
+				for m := 2; shared.Point2dWithinBounds(antinodeA, lenX, lenY); m++ {
 					grid[antinodeA.Y][antinodeA.X] = shared.Colored(shared.ColorRed, "X")
 					outputIteration(grid, antinodeA)
 
@@ -42,7 +42,7 @@ func CountMultiAntinodes() int {
 				}
 
 				antinodeB := shared.PointAlongLineAfterB(a, b, dist)
-				for m := 2; shared.PointWithinBounds(antinodeB, lenX, lenY); m++ {
+				for m := 2; shared.Point2dWithinBounds(antinodeB, lenX, lenY); m++ {
 					grid[antinodeB.Y][antinodeB.X] = shared.Colored(shared.ColorRed, "X")
 					outputIteration(grid, antinodeB)
 

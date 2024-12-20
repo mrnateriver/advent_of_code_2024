@@ -18,6 +18,10 @@ func PointAlongLineAfterB(a, b Point2d, distance float64) Point2d {
 	return Point2d{b.X + int(math.Round(abUnitX*distance)), b.Y + int(math.Round(abUnitY*distance))}
 }
 
-func PointWithinBounds(p Point2d, lx, ly int) bool {
-	return p.X >= 0 && p.X < lx && p.Y >= 0 && p.Y < ly
+func Point2dWithinBounds(p Point2d, lx, ly int) bool {
+	return CoordsWithinBounds(p.X, p.Y, lx, ly)
+}
+
+func CoordsWithinBounds(x, y, lx, ly int) bool {
+	return x >= 0 && x < lx && y >= 0 && y < ly
 }

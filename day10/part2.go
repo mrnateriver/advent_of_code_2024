@@ -40,7 +40,7 @@ func countRating(grid [][]byte, lenX, lenY int, start pos, dp map[pos]int) (scor
 			}
 
 			nextPos := pos{start.X + x, start.Y + y}
-			if !shared.PointWithinBounds(nextPos, lenX, lenY) {
+			if !shared.Point2dWithinBounds(nextPos, lenX, lenY) {
 				continue
 			}
 
