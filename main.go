@@ -58,6 +58,8 @@ func main() {
 	//day11p2 := day11.CountStonesAfterBlinking75()
 	//println("Day 11 part 2: ", day11p2)
 
-	day12p1 := day12.CalcFencePrice()
-	println("Day 12 part 1: ", day12p1)
+	//day12p1 := day12.CalcFencePrice()
+	//println("Day 12 part 1: ", day12p1)
+	day12p2 := day12.CalcFencePriceWithSides()
+	println("Day 12 part 2: ", day12p2)
 }
