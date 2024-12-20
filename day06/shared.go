@@ -63,12 +63,12 @@ func traverse(grid [][]byte, p pos, d dir) iter.Seq2[pos, dir] {
 		lenY := len(grid)
 
 		for {
-			nextPos := moveInDir(p, d)
-			if outOfBounds(nextPos, lenX, lenY) {
+			nextPos := shared.MoveInDir(p, d)
+			if !shared.Point2dWithinBounds(nextPos, lenX, lenY) {
 				break
 			}
 
-			next := gridAt(grid, nextPos)
+			next := shared.GridAt(grid, nextPos)
 			if next == '#' {
 				d = rotateDirClockwise(d)
 			} else {
@@ -83,14 +83,14 @@ func traverse(grid [][]byte, p pos, d dir) iter.Seq2[pos, dir] {
 }
 
 func rotateDirClockwise(d dir) dir {
-	if d == DirUp {
-		return DirRight
-	} else if d == DirRight {
-		return DirDown
-	} else if d == DirDown {
-		return DirLeft
-	} else if d == DirLeft {
-		return DirUp
+	if d == shared.DirUp {
+		return shared.DirRight
+	} else if d == shared.DirRight {
+		return shared.DirDown
+	} else if d == shared.DirDown {
+		return shared.DirLeft
+	} else if d == shared.DirLeft {
+		return shared.DirUp
 	}
 
 	return dir{}
@@ -101,22 +101,6 @@ func seen(pos pos, d dir, dp map[nav]struct{}) bool {
 	return ok
 }
 
-func moveInDir(p pos, d dir) pos {
-	return pos{p.X + d.X, p.Y + d.Y}
-}
-
-func outOfBounds(p pos, lx, ly int) bool {
-	return p.X < 0 || p.X >= lx || p.Y < 0 || p.Y >= ly
-}
-
-func gridAt(grid [][]byte, p pos) byte {
-	return grid[p.Y][p.X]
-}
-
-func setGridAt(grid [][]byte, p pos, value byte) {
-	grid[p.Y][p.X] = value
-}
-
 type dir = shared.Point2d
 
 type pos = dir
@@ -125,10 +109,3 @@ type nav struct {
 	p pos
 	d dir
 }
-
-var (
-	DirUp    = dir{0, -1}
-	DirRight = dir{1, 0}
-	DirDown  = dir{0, 1}
-	DirLeft  = dir{-1, 0}
-)

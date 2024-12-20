@@ -1,9 +1,11 @@
 package day06
 
+import "mrnateriver.io/advent_of_code_2024/shared"
+
 func CountDistinctGuardPositions() int {
 	guard, grid := readGrid()
 
-	return countDistinctSteps(grid, guard, DirUp)
+	return countDistinctSteps(grid, guard, shared.DirUp)
 }
 
 func countDistinctSteps(grid [][]byte, from pos, d dir) int {

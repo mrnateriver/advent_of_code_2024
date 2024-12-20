@@ -5,21 +5,16 @@ import (
 )
 
 func CalcFencePrice() int {
-	input := shared.ReadInputLines("day12/input")
-
-	grid := make([][]byte, 0, 8)
-	for line := range input {
-		grid = append(grid, []byte(line))
-	}
+	grid := readInput()
 
 	lenX, lenY := len(grid[0]), len(grid)
 
-	dp := make(map[cell]struct{})
+	dp := make(map[pos]struct{})
 
 	sum := 0
 	for y := 0; y < lenY; y++ {
 		for x := 0; x < lenX; x++ {
-			s := scan(grid, x, y, lenX, lenY, dp)
+			s := scan(grid, lenX, lenY, pos{x, y}, dp)
 			sum += s.area * s.perim
 		}
 	}
@@ -27,47 +22,29 @@ func CalcFencePrice() int {
 	return sum
 }
 
-func scan(grid [][]byte, x, y, lenX, lenY int, dp map[cell]struct{}) stats {
-	c := grid[y][x]
-	cl := cell{x, y, c}
-	if _, ok := dp[cl]; ok {
+func scan(grid [][]byte, lenX, lenY int, p pos, dp map[pos]struct{}) stats {
+	c := shared.GridAt(grid, p)
+	if _, ok := dp[p]; ok {
 		return stats{}
 	}
 
-	dp[cl] = struct{}{}
+	dp[p] = struct{}{}
 
 	area, perim := 1, 0
-	for dx := -1; dx <= 1; dx++ {
-		for dy := -1; dy <= 1; dy++ {
-			if dx == dy || dx == -dy {
-				continue
-			}
-
-			nx, ny := x+dx, y+dy
-			if !shared.CoordsWithinBounds(nx, ny, lenX, lenY) {
+	for _, np := range shared.Neighbours(p, false) {
+		if !shared.Point2dWithinBounds(np, lenX, lenY) {
+			perim++
+		} else {
+			nval := shared.GridAt(grid, np)
+			if nval != c {
 				perim++
-				continue
 			} else {
-				nval := grid[ny][nx]
-				if nval != c {
-					perim++
-				} else {
-					s := scan(grid, nx, ny, lenX, lenY, dp)
-					area += s.area
-					perim += s.perim
-				}
+				s := scan(grid, lenX, lenY, np, dp)
+				area += s.area
+				perim += s.perim
 			}
 		}
 	}
 
 	return stats{area, perim}
-}
-
-type cell struct {
-	x, y int
-	c    byte
-}
-
-type stats struct {
-	area, perim int
 }
