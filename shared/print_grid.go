@@ -22,6 +22,17 @@ type ConsoleColor int
 var printLock sync.Mutex
 var printDone bool
 
+func CreateDotGrid(lenX, lenY int) [][]string {
+	grid := make([][]string, lenY)
+	for y := range grid {
+		grid[y] = make([]string, lenX)
+		for x := range grid[y] {
+			grid[y][x] = "."
+		}
+	}
+	return grid
+}
+
 func PrintGrid[T any](grid [][]T) {
 	printLock.Lock()
 	defer printLock.Unlock()
