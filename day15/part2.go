@@ -75,7 +75,7 @@ func move2DBoxes(grid [][]string, lenX, lenY int, robot shared.Point2d, dir shar
 
 func debugGrid(grid [][]string, dir shared.Direction) {
 	shared.PrintGrid(grid)
-	fmt.Printf("%c\n", dirChar(dir))
+	fmt.Printf("%c\n", shared.DirChar(dir))
 	shared.MoveCursorUp(1)
 	shared.AwaitInput()
 	time.Sleep(30 * time.Millisecond)

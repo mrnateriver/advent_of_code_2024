@@ -20,7 +20,7 @@ func Move1DBoxesAndSumPositions() int {
 func move1DBoxes(grid [][]string, lenX, lenY int, robot shared.Point2d, dir shared.Direction, debug bool) shared.Point2d {
 	if debug {
 		shared.PrintGrid(grid)
-		fmt.Printf("%c\n", dirChar(dir))
+		fmt.Printf("%c\n", shared.DirChar(dir))
 		shared.MoveCursorUp(1)
 		time.Sleep(60 * time.Millisecond)
 	}

@@ -34,7 +34,7 @@ func readInput() (grid [][]string, dirs []shared.Direction, robot shared.Point2d
 			i++
 		} else {
 			for ix := range line {
-				dir := parseDir(line[ix])
+				dir := shared.ParseDir(line[ix])
 				dirs = append(dirs, dir)
 			}
 		}
@@ -51,36 +51,6 @@ func justAWall(line string) bool {
 		}
 	}
 	return true
-}
-
-func parseDir(c byte) shared.Direction {
-	switch c {
-	case 'v':
-		return shared.DirDown
-	case '>':
-		return shared.DirRight
-	case '<':
-		return shared.DirLeft
-	case '^':
-	default:
-		return shared.DirUp
-	}
-	return shared.DirUp
-}
-
-func dirChar(dir shared.Direction) byte {
-	switch dir {
-	case shared.DirDown:
-		return 'v'
-	case shared.DirRight:
-		return '>'
-	case shared.DirLeft:
-		return '<'
-	case shared.DirUp:
-	default:
-		return '^'
-	}
-	return '^'
 }
 
 const (

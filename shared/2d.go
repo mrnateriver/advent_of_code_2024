@@ -118,3 +118,33 @@ func RotateDir(d Direction, clockwise bool) Direction {
 	// TODO: with a name like that, this function should be able to handle any directions, not just cardinal
 	return Direction{}
 }
+
+func ParseDir(c byte) Direction {
+	switch c {
+	case 'v':
+		return DirDown
+	case '>':
+		return DirRight
+	case '<':
+		return DirLeft
+	case '^':
+	default:
+		return DirUp
+	}
+	return DirUp
+}
+
+func DirChar(dir Direction) byte {
+	switch dir {
+	case DirDown:
+		return 'v'
+	case DirRight:
+		return '>'
+	case DirLeft:
+		return '<'
+	case DirUp:
+	default:
+		return '^'
+	}
+	return '^'
+}
