@@ -70,7 +70,7 @@ func traverse(grid [][]byte, p pos, d dir) iter.Seq2[pos, dir] {
 
 			next := shared.GridAt(grid, nextPos)
 			if next == '#' {
-				d = rotateDirClockwise(d)
+				d = shared.RotateDir(d, true)
 			} else {
 				if !yield(nextPos, d) {
 					return
@@ -80,20 +80,6 @@ func traverse(grid [][]byte, p pos, d dir) iter.Seq2[pos, dir] {
 			}
 		}
 	}
-}
-
-func rotateDirClockwise(d dir) dir {
-	if d == shared.DirUp {
-		return shared.DirRight
-	} else if d == shared.DirRight {
-		return shared.DirDown
-	} else if d == shared.DirDown {
-		return shared.DirLeft
-	} else if d == shared.DirLeft {
-		return shared.DirUp
-	}
-
-	return dir{}
 }
 
 func seen(pos pos, d dir, dp map[nav]struct{}) bool {

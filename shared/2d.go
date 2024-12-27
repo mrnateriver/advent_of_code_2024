@@ -91,3 +91,30 @@ func Neighbours(p Point2d, incDiags bool) iter.Seq2[Direction, Point2d] {
 		}
 	}
 }
+
+func RotateDir(d Direction, clockwise bool) Direction {
+	if clockwise {
+		if d == DirUp {
+			return DirRight
+		} else if d == DirRight {
+			return DirDown
+		} else if d == DirDown {
+			return DirLeft
+		} else if d == DirLeft {
+			return DirUp
+		}
+	} else {
+		if d == DirUp {
+			return DirLeft
+		} else if d == DirLeft {
+			return DirDown
+		} else if d == DirDown {
+			return DirRight
+		} else if d == DirRight {
+			return DirUp
+		}
+	}
+
+	// TODO: with a name like that, this function should be able to handle any directions, not just cardinal
+	return Direction{}
+}
