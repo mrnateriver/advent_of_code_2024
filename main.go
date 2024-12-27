@@ -80,6 +80,8 @@ func main() {
 	// day15p2 := day15.Move2DBoxesAndSumPositions()
 	// println("Day 15 part 2: ", day15p2)
 
-	day16p1 := day16.FindPathWithLowestScore()
-	println("Day 16 part 1: ", day16p1)
+	// day16p1 := day16.FindPathWithLowestScore()
+	// println("Day 16 part 1: ", day16p1)
+	day16p2 := day16.CountStepsInPathsWithLowestScores()
+	println("Day 16 part 2: ", day16p2)
 }
