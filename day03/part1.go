@@ -11,10 +11,7 @@ import (
 func AddUpMultiplicationInstructions() int {
 	input := shared.ReadInputLines("day03/input")
 
-	rg, err := regexp.Compile("mul\\((\\d+),(\\d+)\\)|do\\(\\)|don't\\(\\)")
-	if err != nil {
-		panic(err)
-	}
+	rg := regexp.MustCompile("mul\\((\\d+),(\\d+)\\)|do\\(\\)|don't\\(\\)")
 
 	sum := 0
 

@@ -8,15 +8,8 @@ import (
 )
 
 func readInput() []machine {
-	buttonRegex, err := regexp.Compile("Button (A|B): X\\+(\\d+), Y\\+(\\d+)")
-	if err != nil {
-		panic(err)
-	}
-
-	prizeRegex, err := regexp.Compile("Prize: X=(\\d+), Y=(\\d+)")
-	if err != nil {
-		panic(err)
-	}
+	buttonRegex := regexp.MustCompile("Button (A|B): X\\+(\\d+), Y\\+(\\d+)")
+	prizeRegex := regexp.MustCompile("Prize: X=(\\d+), Y=(\\d+)")
 
 	machines := make([]machine, 0, 4)
 

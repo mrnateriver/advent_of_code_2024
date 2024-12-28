@@ -8,10 +8,7 @@ import (
 )
 
 func readInput() []robot {
-	robotRegex, err := regexp.Compile("p=(\\d+),(\\d+) v=(-?\\d+),(-?\\d+)")
-	if err != nil {
-		panic(err)
-	}
+	robotRegex := regexp.MustCompile("p=(\\d+),(\\d+) v=(-?\\d+),(-?\\d+)")
 
 	robots := make([]robot, 0, 2)
 
