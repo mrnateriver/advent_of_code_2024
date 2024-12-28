@@ -85,6 +85,8 @@ func main() {
 	// day16p2 := day16.CountStepsInPathsWithLowestScores()
 	// println("Day 16 part 2: ", day16p2)
 
-	day17p1 := day17.RunProgram()
-	println("Day 17 part 1: ", day17p1)
+	// day17p1 := day17.RunProgram()
+	// println("Day 17 part 1: ", day17p1)
+	day17p2 := day17.FindSelfProducingProgramRegister()
+	println("Day 17 part 2: ", day17p2)
 }
