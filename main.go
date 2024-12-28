@@ -1,7 +1,7 @@
 package main
 
 import (
-	"mrnateriver.io/advent_of_code_2024/day16"
+	"mrnateriver.io/advent_of_code_2024/day17"
 )
 
 func main() {
@@ -82,6 +82,9 @@ func main() {
 
 	// day16p1 := day16.FindPathWithLowestScore()
 	// println("Day 16 part 1: ", day16p1)
-	day16p2 := day16.CountStepsInPathsWithLowestScores()
-	println("Day 16 part 2: ", day16p2)
+	// day16p2 := day16.CountStepsInPathsWithLowestScores()
+	// println("Day 16 part 2: ", day16p2)
+
+	day17p1 := day17.RunProgram()
+	println("Day 17 part 1: ", day17p1)
 }
