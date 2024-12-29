@@ -1,7 +1,7 @@
 package main
 
 import (
-	"mrnateriver.io/advent_of_code_2024/day17"
+	"mrnateriver.io/advent_of_code_2024/day18"
 )
 
 func main() {
@@ -87,6 +87,11 @@ func main() {
 
 	// day17p1 := day17.RunProgram()
 	// println("Day 17 part 1: ", day17p1)
-	day17p2 := day17.FindSelfProducingProgramRegister()
-	println("Day 17 part 2: ", day17p2)
+	//day17p2 := day17.FindSelfProducingProgramRegister()
+	//println("Day 17 part 2: ", day17p2)
+
+	//day18p1 := day18.MeasureShortestPathAfterBytefall()
+	//println("Day 18 part 1: ", day18p1)
+	day18p2 := day18.FindFirstBlockerOnPath()
+	println("Day 18 part 2: ", day18p2)
 }
