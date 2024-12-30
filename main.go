@@ -1,8 +1,6 @@
 package main
 
-import (
-	"mrnateriver.io/advent_of_code_2024/day18"
-)
+import "mrnateriver.io/advent_of_code_2024/day19"
 
 func main() {
 	// day01p1 := day01.CalculateTotalDistance()
@@ -92,6 +90,11 @@ func main() {
 
 	//day18p1 := day18.MeasureShortestPathAfterBytefall()
 	//println("Day 18 part 1: ", day18p1)
-	day18p2 := day18.FindFirstBlockerOnPath()
-	println("Day 18 part 2: ", day18p2)
+	//day18p2 := day18.FindFirstBlockerOnPath()
+	//println("Day 18 part 2: ", day18p2)
+
+	//day19p1 := day19.CountPossibleDesigns()
+	//println("Day 19 part 1: ", day19p1)
+	day19p2 := day19.CountWaysToCreateDesigns()
+	println("Day 19 part 2: ", day19p2)
 }
