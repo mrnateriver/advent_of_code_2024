@@ -1,6 +1,6 @@
 package main
 
-import "mrnateriver.io/advent_of_code_2024/day20"
+import "mrnateriver.io/advent_of_code_2024/day21"
 
 func main() {
 	// day01p1 := day01.CalculateTotalDistance()
@@ -100,6 +100,11 @@ func main() {
 
 	//day20p1 := day20.CountTopCheatsOnRacetrack()
 	//println("Day 20 part 1: ", day20p1)
-	day20p2 := day20.CountLongerTopCheatsOnRacetrack()
-	println("Day 20 part 2: ", day20p2)
+	//day20p2 := day20.CountLongerTopCheatsOnRacetrack()
+	//println("Day 20 part 2: ", day20p2)
+
+	//day21p1 := day21.CalcCodesComplexity()
+	//println("Day 21 part 1: ", day21p1)
+	day21p2 := day21.CalcCodesComplexityLarge()
+	println("Day 21 part 2: ", day21p2)
 }

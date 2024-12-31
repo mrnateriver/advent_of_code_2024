@@ -22,7 +22,7 @@ func FindShortestPaths[T comparable](grid [][]T, start, end Point2d, wall T) []P
 		} else if pathEnd == end {
 			finalLength = pathLen
 			res = append(res, path)
-		} else if seenLen, ok := seen[pathEnd]; !ok || seenLen > pathLen {
+		} else if seenLen, ok := seen[pathEnd]; !ok || seenLen >= pathLen {
 			seen[pathEnd] = pathLen
 
 			for _, next := range Neighbours(pathEnd, false) {
