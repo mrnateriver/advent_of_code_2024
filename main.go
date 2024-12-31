@@ -98,6 +98,8 @@ func main() {
 	//day19p2 := day19.CountWaysToCreateDesigns()
 	//println("Day 19 part 2: ", day19p2)
 
-	day20p1 := day20.CountTopCheatsOnRacetrack()
-	println("Day 20 part 1: ", day20p1)
+	//day20p1 := day20.CountTopCheatsOnRacetrack()
+	//println("Day 20 part 1: ", day20p1)
+	day20p2 := day20.CountLongerTopCheatsOnRacetrack()
+	println("Day 20 part 2: ", day20p2)
 }
