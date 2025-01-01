@@ -108,6 +108,8 @@ func main() {
 	//day21p2 := day21.CalcCodesComplexityLarge()
 	//println("Day 21 part 2: ", day21p2)
 
-	day22p1 := day22.CalcSecretNumbersSum()
-	println("Day 22 part 1: ", day22p1)
+	//day22p1 := day22.CalcSecretNumbersSum()
+	//println("Day 22 part 1: ", day22p1)
+	day22p2 := day22.CalcMaxBananasFromSequences()
+	println("Day 22 part 2: ", day22p2)
 }
