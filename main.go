@@ -1,8 +1,6 @@
 package main
 
-import (
-	"mrnateriver.io/advent_of_code_2024/day23"
-)
+import "mrnateriver.io/advent_of_code_2024/day24"
 
 func main() {
 	// day01p1 := day01.CalculateTotalDistance()
@@ -117,6 +115,10 @@ func main() {
 
 	//day23p1 := day23.CountSetsOfComputerTrios()
 	//println("Day 23 part 1: ", day23p1)
-	day23p2 := day23.FindLargestCluster()
-	println("Day 23 part 2: ", day23p2)
+	//day23p2 := day23.FindLargestCluster()
+	//println("Day 23 part 2: ", day23p2)
+
+	day24p1 := day24.RunWiring()
+	println("Day 24 part 1: ", day24p1)
+
 }
