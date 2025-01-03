@@ -2,7 +2,9 @@ package day24
 
 import (
 	"fmt"
+	"slices"
 	"strconv"
+	"strings"
 )
 
 func RewireCircuit() string {
@@ -23,17 +25,27 @@ func RewireCircuit() string {
 		}
 	}
 
-	//res := make([]wire, 0, 8)
+	res := make([]string, 0, 8)
+	var c0 wire
 	for i := 0; i <= maxI; i++ {
-		if !validFullAdderExists(groupedGates, i) {
-			fmt.Printf("failed to find full adder for %v\n", i)
+		nextC0, swap := validFullAdderExists(gates, groupedGates, i, c0)
+		if swap != nil && len(swap) == 2 {
+			fmt.Printf("swap %d: %v\n", i, swap)
+			for _, s := range swap {
+				res = append(res, string(s))
+			}
 		}
+		c0 = nextC0
 	}
 
-	return ""
+	slices.SortFunc(res, func(a, b string) int {
+		return strings.Compare(a, b)
+	})
+
+	return strings.Join(res, ",")
 }
 
-func validFullAdderExists(groupedGates map[wire][]*gateDesc, i int) bool {
+func validFullAdderExists(gates []*gateDesc, groupedGates map[wire][]*gateDesc, i int, c0 wire) (c1 wire, swap []wire) {
 	x := wire(fmt.Sprintf("x%02d", i))
 	y := wire(fmt.Sprintf("y%02d", i))
 	z := wire(fmt.Sprintf("z%02d", i))
@@ -45,20 +57,67 @@ func validFullAdderExists(groupedGates map[wire][]*gateDesc, i int) bool {
 	}
 
 	if z == "z00" {
-		return true
+		c1 = aba.o
+		return
 	}
 
-	var c0, abxcx, c1 *gateDesc
+	// A = X, B = Y
+	// A -----.
+	//        |       abx
+	//        |------ XOR -------.
+	//        |                  |        abxcx
+	// B -----'                  |-------- XOR ------ Z
+	//                           |
+	// C0 -----------------------'
+	//
+	// A -----.
+	//        |       aba
+	//        |------ AND -------.
+	//        |                  |        c1o
+	// B -----'                  |-------- OR ------- C1
+	//          abx              |
+	//           |               |
+	// C0 ----- AND -------------'
+	//         abxca
 
-	c0 = findC0Gate(groupedGates, abx.o, z)
-	if c0 != nil {
-		abxcx = findAbxcxGate(groupedGates, abx.o, c0.b)
+	// Possible invalid output wires:
+	// - abx.o
+	// - abxcx.o
+	// - aba.o
+	// - abxca.o
+	// - c1o.o
+
+	var abxcx, abxca, c1o *gateDesc
+
+	abxcx = findAbxcxGate(groupedGates, abx.o, z)
+	if abxcx == nil {
+		abxRep := findAbxcxReplacementAbx(gates, z, c0)
+		if abxRep != nil {
+			abxRepOutput := abxRep.a
+			if abxRep.a == c0 {
+				abxRepOutput = abxRep.b
+			}
+
+			swap = []wire{abxRepOutput, abx.o}
+		} else {
+			zRep := findAbxcxReplacementZ(gates, abx.o, c0)
+			if zRep != nil {
+				swap = []wire{zRep.o, z}
+			}
+		}
 	}
+
 	if abxcx != nil {
-		c1 = findC1Gate(groupedGates, abxcx.o, aba.o)
+		abxca = findAbxcaGate(groupedGates, abx.o, abxcx)
+	}
+	if abxca != nil {
+		c1o = findC1Gate(groupedGates, abxca.o, aba.o)
+	}
+	if c1o != nil {
+		c1 = c1o.o
 	}
 
-	return c0 != nil && abxcx != nil && c1 != nil
+	return
 }
 
 func findAbxGate(groupedGates map[wire][]*gateDesc, x, y wire) *gateDesc {
@@ -79,7 +138,7 @@ func findAbaGate(groupedGates map[wire][]*gateDesc, x, y wire) *gateDesc {
 	return nil
 }
 
-func findC0Gate(groupedGates map[wire][]*gateDesc, abx, z wire) *gateDesc {
+func findAbxcxGate(groupedGates map[wire][]*gateDesc, abx, z wire) *gateDesc {
 	for _, g := range groupedGates[abx] {
 		if g.o == z && g.kind == gateKindXor {
 			return g
@@ -87,18 +146,41 @@ func findC0Gate(groupedGates map[wire][]*gateDesc, abx, z wire) *gateDesc {
 	}
 	return nil
 }
-
-func findAbxcxGate(groupedGates map[wire][]*gateDesc, abx, c0 wire) *gateDesc {
-	for _, g := range groupedGates[abx] {
-		if (g.a == c0 || g.b == c0) && g.kind == gateKindAnd {
+func findAbxcxReplacementAbx(gates []*gateDesc, z, c0 wire) *gateDesc {
+	for _, g := range gates {
+		if (g.a == c0 || g.b == c0) && g.o == z && g.kind == gateKindXor {
+			return g
+		}
+	}
+	return nil
+}
+func findAbxcxReplacementZ(gates []*gateDesc, abx, c0 wire) *gateDesc {
+	for _, g := range gates {
+		if ((g.a == c0 && g.b == abx) || (g.a == abx && g.b == c0)) && g.kind == gateKindXor {
 			return g
 		}
 	}
 	return nil
 }
 
-func findC1Gate(groupedGates map[wire][]*gateDesc, abxcx, aba wire) *gateDesc {
-	for _, g := range groupedGates[abxcx] {
+func findAbxcaGate(groupedGates map[wire][]*gateDesc, abx wire, abxcx *gateDesc) *gateDesc {
+	var abxcxWire wire
+	if abxcx.a == abx {
+		abxcxWire = abxcx.b
+	} else {
+		abxcxWire = abxcx.a
+	}
+
+	for _, g := range groupedGates[abx] {
+		if (g.a == abxcxWire || g.b == abxcxWire) && g.kind == gateKindAnd {
+			return g
+		}
+	}
+	return nil
+}
+
+func findC1Gate(groupedGates map[wire][]*gateDesc, abxca, aba wire) *gateDesc {
+	for _, g := range groupedGates[abxca] {
 		if (g.a == aba || g.b == aba) && g.kind == gateKindOr {
 			return g
 		}
