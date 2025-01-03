@@ -34,18 +34,40 @@ func readInput() (gates []*gateDesc, values map[wire]int) {
 
 		matches = gateRegex.FindStringSubmatch(line)
 		if matches != nil {
+			kind := matches[2]
+
 			a := matches[1]
-			g := parseGate(matches[2])
+			g := parseGate(kind)
 			b := matches[3]
 			o := matches[4]
 
-			gate := gateDesc{wire(a), wire(b), wire(o), -1, -1, nil, nil, g}
+			gate := gateDesc{kind, wire(a), wire(b), wire(o), -1, -1, nil, nil, g}
 			gates = append(gates, &gate)
 			continue
 		}
 	}
 
 	return
+}
+
+func groupGates(gates []*gateDesc) map[wire][]*gateDesc {
+	groupedGates := make(map[wire][]*gateDesc)
+	for _, gate := range gates {
+		storeVertex(groupedGates, gate)
+	}
+	return groupedGates
+}
+
+func storeVertex(vertices map[wire][]*gateDesc, v *gateDesc) {
+	if _, exists := vertices[v.a]; !exists {
+		vertices[v.a] = make([]*gateDesc, 0, 2)
+	}
+	vertices[v.a] = append(vertices[v.a], v)
+
+	if _, exists := vertices[v.b]; !exists {
+		vertices[v.b] = make([]*gateDesc, 0, 2)
+	}
+	vertices[v.b] = append(vertices[v.b], v)
 }
 
 func performAddition(gates []*gateDesc, values map[wire]int) (output uint64) {
@@ -107,33 +129,19 @@ func connectGates(groupedGates map[wire][]*gateDesc) {
 	}
 }
 
-func groupGates(gates []*gateDesc) map[wire][]*gateDesc {
-	groupedGates := make(map[wire][]*gateDesc)
-	for _, gate := range gates {
-		storeVertex(groupedGates, gate)
-	}
-	return groupedGates
-}
-
-func storeVertex(vertices map[wire][]*gateDesc, v *gateDesc) {
-	if _, exists := vertices[v.a]; !exists {
-		vertices[v.a] = make([]*gateDesc, 0, 2)
-	}
-	vertices[v.a] = append(vertices[v.a], v)
-
-	if _, exists := vertices[v.b]; !exists {
-		vertices[v.b] = make([]*gateDesc, 0, 2)
-	}
-	vertices[v.b] = append(vertices[v.b], v)
-}
+const (
+	gateKindAnd = "AND"
+	gateKindOr  = "OR"
+	gateKindXor = "XOR"
+)
 
 func parseGate(g string) gate {
 	switch g {
-	case "AND":
+	case gateKindAnd:
 		return andGate
-	case "OR":
+	case gateKindOr:
 		return orGate
-	case "XOR":
+	case gateKindXor:
 		return xorGate
 	}
 	panic(fmt.Errorf("unknown gate: %v", g))
@@ -168,6 +176,7 @@ type gate func(int, int) int
 type wire string
 
 type gateDesc struct {
+	kind    string
 	a, b, o wire
 	va, vb  int
 	vo      *uint64
