@@ -118,7 +118,8 @@ func main() {
 	//day23p2 := day23.FindLargestCluster()
 	//println("Day 23 part 2: ", day23p2)
 
-	day24p1 := day24.RunWiring()
-	println("Day 24 part 1: ", day24p1)
-
+	//day24p1 := day24.RunWiring()
+	//println("Day 24 part 1: ", day24p1)
+	day24p2 := day24.RewireCircuit()
+	println("Day 24 part 2: ", day24p2)
 }
