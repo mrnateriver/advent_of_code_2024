@@ -1,6 +1,6 @@
 package main
 
-import "mrnateriver.io/advent_of_code_2024/day24"
+import "mrnateriver.io/advent_of_code_2024/day25"
 
 func main() {
 	// day01p1 := day01.CalculateTotalDistance()
@@ -120,6 +120,9 @@ func main() {
 
 	//day24p1 := day24.RunWiring()
 	//println("Day 24 part 1: ", day24p1)
-	day24p2 := day24.RewireCircuit()
-	println("Day 24 part 2: ", day24p2)
+	//day24p2 := day24.RewireCircuit()
+	//println("Day 24 part 2: ", day24p2)
+
+	day25p1 := day25.CountLockKeyCombinations()
+	println("Day 25 part 1: ", day25p1)
 }
